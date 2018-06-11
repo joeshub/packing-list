@@ -11,7 +11,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { items, inputValue } = this.state
+    const { inputValue } = this.state
     return (
       <View style={styles.container}>
         <TextInput style={styles.input} value={inputValue} onChangeText={this.handleInput} />
