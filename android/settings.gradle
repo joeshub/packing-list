@@ -1,0 +1,3 @@
+rootProject.name = 'PackingList'
+
+include ':app'
