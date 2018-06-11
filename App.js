@@ -1,58 +1,64 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+import React, { Component } from "react"
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, LayoutAnimation } from "react-native"
 
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+export default class App extends Component {
+  state = {
+    items: ["socks", "toothbrush", "shoes", "T-shirts", "pants", "belt"]
+  }
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+  listItems(item, index) {
+    // LayoutAnimation.spring()
+    const borderRightWidth = index % 1 > 0 ? 0 : 1
+    const borderBottomWidth = this.state.items.length - 3 > index ? 1 : 0
+    return (
+      <TouchableOpacity
+        style={[styles.itemWrapper, { borderRightWidth, borderBottomWidth }]}
+        key={index}
+      >
+        <Text style={styles.item}>{item.toUpperCase()}</Text>
+      </TouchableOpacity>
+    )
+  }
 
-type Props = {};
-export default class App extends Component<Props> {
   render() {
+    const { items } = this.state
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <View style={{ alignItems: "center" }}>
+          <FlatList
+            data={items}
+            keyExtractor={item => item}
+            renderItem={({ item, index }) => this.listItems(item, index)}
+            contentContainerStyle={styles.listContainer}
+            style={styles.list}
+            numColumns={3}
+          />
+        </View>
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: "#F5FCFF",
+    justifyContent: "center"
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  list: {
+    borderWidth: 1,
+    borderColor: "lightgray"
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  itemWrapper: {
+    borderBottomWidth: 1,
+    borderColor: "lightgray",
+    height: 40,
+    width: 100,
+    alignItems: "center",
+    justifyContent: "center"
   },
-});
+  item: {
+    margin: 5,
+    fontSize: 12
+  }
+})
