@@ -1,39 +1,21 @@
 import React, { Component } from "react"
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, LayoutAnimation } from "react-native"
+import { StyleSheet, Text, View, TextInput } from "react-native"
 
 export default class App extends Component {
   state = {
-    items: ["socks", "toothbrush", "shoes", "T-shirts", "pants", "belt"]
+    inputValue: null
   }
 
-  listItems(item, index) {
-    // LayoutAnimation.spring()
-    const borderRightWidth = index % 1 > 0 ? 0 : 1
-    const borderBottomWidth = this.state.items.length - 3 > index ? 1 : 0
-    return (
-      <TouchableOpacity
-        style={[styles.itemWrapper, { borderRightWidth, borderBottomWidth }]}
-        key={index}
-      >
-        <Text style={styles.item}>{item.toUpperCase()}</Text>
-      </TouchableOpacity>
-    )
+  handleInput = value => {
+    this.setState({ inputValue: value })
   }
 
   render() {
-    const { items } = this.state
+    const { items, inputValue } = this.state
     return (
       <View style={styles.container}>
-        <View style={{ alignItems: "center" }}>
-          <FlatList
-            data={items}
-            keyExtractor={item => item}
-            renderItem={({ item, index }) => this.listItems(item, index)}
-            contentContainerStyle={styles.listContainer}
-            style={styles.list}
-            numColumns={3}
-          />
-        </View>
+        <TextInput style={styles.input} value={inputValue} onChangeText={this.handleInput} />
+        <Text style={styles.theValue}>{inputValue}</Text>
       </View>
     )
   }
@@ -43,22 +25,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F5FCFF",
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: "center"
   },
-  list: {
-    borderWidth: 1,
-    borderColor: "lightgray"
-  },
-  itemWrapper: {
-    borderBottomWidth: 1,
-    borderColor: "lightgray",
+  input: {
+    width: "50%",
     height: 40,
-    width: 100,
-    alignItems: "center",
-    justifyContent: "center"
+    borderColor: "lightgray",
+    borderWidth: 1,
+    padding: 5
   },
-  item: {
-    margin: 5,
-    fontSize: 12
+  theValue: {
+    margin: 10,
+    fontSize: 18
   }
 })
