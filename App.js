@@ -4,8 +4,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "r
 /*
   STEP THREE
   • Add ability to "check" an item
+  • Intro to ListView
   • Bring in grid
-  • Store checked-off values in local state
 */
 
 export default class App extends Component {
@@ -62,6 +62,7 @@ export default class App extends Component {
     const borderBottomWidth = this.state.items.length - 3 > index ? 1 : 0
     return (
       <TouchableOpacity
+        onPress={() => this.checkItem(item)}
         style={[styles.itemWrapper, { borderRightWidth, borderBottomWidth }]}
         key={index}
       >
@@ -74,21 +75,25 @@ export default class App extends Component {
     const { items } = this.state
     return (
       <View style={styles.container}>
-        {this.renderInputRow()}
-        {items.map((item, i) => (
-          <Text onPress={() => this.checkItem(item)} key={i} style={styles.theValue}>
-            {item}
-          </Text>
-        ))}
-        <View style={{ alignItems: "center" }}>
-          <FlatList
-            data={items}
-            keyExtractor={item => item}
-            renderItem={({ item, index }) => this.listItems(item, index)}
-            contentContainerStyle={styles.listContainer}
-            style={styles.list}
-            numColumns={3}
-          />
+        <View style={styles.topContainer}>
+          {this.renderInputRow()}
+          {items.map((item, i) => (
+            <Text onPress={() => this.checkItem(item)} key={i} style={styles.theValue}>
+              {item}
+            </Text>
+          ))}
+        </View>
+        <View style={{ flex: 1, padding: 20 }}>
+          <View style={{ alignItems: "center", flexShrink: 1 }}>
+            <FlatList
+              data={items}
+              keyExtractor={item => item}
+              renderItem={({ item, index }) => this.listItems(item, index)}
+              contentContainerStyle={styles.listContainer}
+              style={styles.list}
+              numColumns={3}
+            />
+          </View>
         </View>
       </View>
     )
@@ -98,9 +103,14 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5FCFF",
+    backgroundColor: "#F5FCFF"
+  },
+  topContainer: {
+    flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "black"
   },
   input: {
     width: "50%",
@@ -146,5 +156,21 @@ const styles = StyleSheet.create({
   buttonText: {
     margin: 5,
     color: "white"
+  },
+  list: {
+    borderWidth: 1,
+    borderColor: "lightgray"
+  },
+  itemWrapper: {
+    borderBottomWidth: 1,
+    borderColor: "lightgray",
+    height: 40,
+    width: 100,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  item: {
+    margin: 5,
+    fontSize: 12
   }
 })
