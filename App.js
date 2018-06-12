@@ -1,17 +1,18 @@
 import React, { Component } from "react"
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native"
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
 
 /*
   STEP THREE
-  • Introduction to controlling a component - TextInput
-  • Clear input
-  • Add more styling - corners & shadows
+  • Add ability to "check" an item
+  • Bring in grid
+  • Store checked-off values in local state
 */
 
 export default class App extends Component {
   state = {
     inputValue: null,
-    items: []
+    items: [],
+    selectedItems: []
   }
 
   handleInput = value => {
@@ -28,6 +29,11 @@ export default class App extends Component {
   clearItems() {
     this.setState({ items: [] })
     this.input.clear()
+  }
+  checkItem(selected) {
+    const { items, selectedItems } = this.state
+    const filteredItems = items.filter(item => item !== selected)
+    this.setState({ items: filteredItems, selectedItems: selectedItems.concat(selected) })
   }
 
   renderInputRow = () => {
@@ -50,16 +56,40 @@ export default class App extends Component {
     )
   }
 
+  listItems(item, index) {
+    // LayoutAnimation.spring()
+    const borderRightWidth = index % 1 > 0 ? 0 : 1
+    const borderBottomWidth = this.state.items.length - 3 > index ? 1 : 0
+    return (
+      <TouchableOpacity
+        style={[styles.itemWrapper, { borderRightWidth, borderBottomWidth }]}
+        key={index}
+      >
+        <Text style={styles.item}>{item.toUpperCase()}</Text>
+      </TouchableOpacity>
+    )
+  }
+
   render() {
     const { items } = this.state
     return (
       <View style={styles.container}>
         {this.renderInputRow()}
         {items.map((item, i) => (
-          <Text key={i} style={styles.theValue}>
+          <Text onPress={() => this.checkItem(item)} key={i} style={styles.theValue}>
             {item}
           </Text>
         ))}
+        <View style={{ alignItems: "center" }}>
+          <FlatList
+            data={items}
+            keyExtractor={item => item}
+            renderItem={({ item, index }) => this.listItems(item, index)}
+            contentContainerStyle={styles.listContainer}
+            style={styles.list}
+            numColumns={3}
+          />
+        </View>
       </View>
     )
   }
