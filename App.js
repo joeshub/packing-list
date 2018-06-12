@@ -2,11 +2,10 @@ import React, { Component } from "react"
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native"
 
 /*
-  STEP TWO
-  • Move the input to its own function and a wrapper & some buttons
-  • Introduce "items" array into local state
-  • Able to push inputted items into the items array
-  • Able to clear items from the items array
+  STEP THREE
+  • Introduction to controlling a component - TextInput
+  • Clear input
+  • Add more styling - corners & shadows
 */
 
 export default class App extends Component {
@@ -23,18 +22,24 @@ export default class App extends Component {
     const { inputValue, items } = this.state
     const newItems = items.concat(inputValue)
     this.setState({ items: newItems })
+    this.input.clear()
   }
 
   clearItems() {
     this.setState({ items: [] })
+    this.input.clear()
   }
 
   renderInputRow = () => {
     const { inputValue } = this.state
     return (
       <View style={styles.inputRow}>
-        <TextInput style={styles.input} value={inputValue} onChangeText={this.handleInput} />{" "}
-        {/* Introduce the new function syntax */}
+        <TextInput
+          ref={ref => (this.input = ref)}
+          style={styles.input}
+          value={inputValue}
+          onChangeText={this.handleInput}
+        />
         <TouchableOpacity style={styles.addButton} onPress={() => this.addNewItem()}>
           <Text style={styles.buttonText}>ADD</Text>
         </TouchableOpacity>
@@ -46,7 +51,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { inputValue, items } = this.state
+    const { items } = this.state
     return (
       <View style={styles.container}>
         {this.renderInputRow()}
@@ -83,12 +88,28 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   addButton: {
+    borderRadius: 5,
     marginLeft: 10,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 5,
+      height: 5
+    },
+    shadowOpacity: 0.9,
+    shadowColor: "black",
     justifyContent: "center",
     backgroundColor: "green"
   },
   clearButton: {
+    borderRadius: 5,
     marginLeft: 10,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 5,
+      height: 5
+    },
+    shadowOpacity: 0.9,
+    shadowColor: "black",
     justifyContent: "center",
     backgroundColor: "gray"
   },
