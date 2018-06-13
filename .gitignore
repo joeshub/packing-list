@@ -53,9 +53,13 @@ buck-out/
 */fastlane/screenshots
 
 # Bundle artifact
+#
 *.jsbundle
 .eslintrc.json
 package-lock.json
 ios/Pods
-.vscode
 /artifacts
+
+# VSCode
+#
+.vscode
