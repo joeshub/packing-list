@@ -2,17 +2,17 @@ import React, { Component } from "react"
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
 
 /*
-  STEP THREE
+  STEP FOUR
   • Add ability to "check" an item
   • Intro to ListView
   • Bring in grid
+  • Update local state
 */
 
 export default class App extends Component {
   state = {
     inputValue: null,
-    items: [],
-    selectedItems: []
+    items: []
   }
 
   handleInput = value => {
@@ -32,8 +32,8 @@ export default class App extends Component {
   }
   checkItem(selected) {
     const { items, selectedItems } = this.state
-    const filteredItems = items.filter(item => item !== selected)
-    this.setState({ items: filteredItems, selectedItems: selectedItems.concat(selected) })
+    const newItems = items.filter(item => item !== selected)
+    this.setState({ items: newItems })
   }
 
   renderInputRow = () => {
