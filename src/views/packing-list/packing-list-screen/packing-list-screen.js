@@ -1,5 +1,11 @@
 import React from "react"
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
+import { StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  FlatList } from "react-native"
+import { Button } from "../../shared/button"
 
 export class PackingListScreen extends React.Component {
   state = {
@@ -17,7 +23,7 @@ export class PackingListScreen extends React.Component {
     this.setState({ inputValue: value })
   }
 
-  addNewItem() {
+  handleAddPress = () => {
     const { inputValue, items } = this.state
     if (inputValue) {
       const newItems = items.concat(inputValue)
@@ -26,10 +32,11 @@ export class PackingListScreen extends React.Component {
     }
   }
 
-  clearItems() {
+  handleClearPress = () => {
     this.setState({ items: [] })
     this.clearInput()
   }
+
   checkItem(selected) {
     const { items, selectedItems } = this.state
     const filteredItems = items.filter(item => item !== selected)
@@ -46,12 +53,14 @@ export class PackingListScreen extends React.Component {
           value={inputValue}
           onChangeText={this.handleInput}
         />
-        <TouchableOpacity style={styles.addButton} onPress={() => this.addNewItem()}>
-          <Text style={styles.buttonText}>ADD</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.clearButton} onPress={() => this.clearItems()}>
-          <Text style={styles.buttonText}>Clear</Text>
-        </TouchableOpacity>
+        <Button
+          onPress={this.handleAddPress}
+          style={{ backgroundColor: "green" }}>
+          ADD
+        </Button>
+        <Button
+          onPress={this.handleClearPress}
+          text={"CLEAR"} />
       </View>
     )
   }
@@ -126,36 +135,6 @@ const styles = StyleSheet.create({
   },
   inputRow: {
     flexDirection: "row"
-  },
-  addButton: {
-    borderRadius: 5,
-    marginLeft: 10,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 5,
-      height: 5
-    },
-    shadowOpacity: 0.9,
-    shadowColor: "black",
-    justifyContent: "center",
-    backgroundColor: "green"
-  },
-  clearButton: {
-    borderRadius: 5,
-    marginLeft: 10,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 5,
-      height: 5
-    },
-    shadowOpacity: 0.9,
-    shadowColor: "black",
-    justifyContent: "center",
-    backgroundColor: "gray"
-  },
-  buttonText: {
-    margin: 5,
-    color: "white"
   },
   list: {
     borderWidth: 1,

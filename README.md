@@ -3,17 +3,19 @@
 A packing list iOS and Android application written in React Native.
 
 # Summary
-- Step 01: Render text input
-- Step 02: Add & remove items
-- Step 03: Clear input & add styles
-- Step 04: Check item off
-- Step 05: Basic folder structure?
-- Step 06: ScrollView?
-- Step 07: Attach input to bottom?
-- Step 08: Navigation?
-- Step 09: Multiple components?
-- Step 10: Theme?
-- Step 11: TypeScript?
-- Step 12: PropTypes?
-- Step 13: State management?
-- Step 14: SVG and image scaling?
+1. Render text input
+1. Add & remove items
+1. Clear input & add styles
+1. Check item off
+1. Basic folder structure
+1. Create Button Component
+1. Font Styles
+1. ScrollView?
+1. Attach input to bottom?
+1. Navigation?
+1. Multiple components?
+1. Theme?
+1. TypeScript?
+1. PropTypes?
+1. State management?
+1. SVG and image scaling?
