@@ -3,12 +3,10 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "r
 
 /*
   STEP FIVE
-  • Add ability to "check" an item
-  • Intro to ListView
-  • Bring in grid
+  • Setup basic project folder structure
 */
 
-export default class App extends Component {
+export default class RootComponent extends Component {
   state = {
     inputValue: null,
     items: [],
