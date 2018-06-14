@@ -59,7 +59,3 @@ buck-out/
 package-lock.json
 ios/Pods
 /artifacts
-
-# VSCode
-#
-.vscode
