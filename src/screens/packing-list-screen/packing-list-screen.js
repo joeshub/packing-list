@@ -2,7 +2,7 @@ import React from "react"
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
 import { ListInput } from "../../components/list-input"
 /*
-  STEP FIVE
+  STEP SIX
   • Create “components” folder - /components
   • Create Button component - in /button folder
   • Create ListInput Component - in /list-input
