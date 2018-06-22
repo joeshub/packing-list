@@ -77,11 +77,13 @@ export default class App extends Component {
       <View style={styles.container}>
         <View style={styles.topContainer}>
           {this.renderInputRow()}
-          {items.map((item, i) => (
-            <Text onPress={() => this.checkItem(item)} key={i} style={styles.theValue}>
-              {item}
-            </Text>
-          ))}
+          <View style={{ flexDirection: "row" }}>
+            {items.map((item, i) => (
+              <Text onPress={() => this.checkItem(item)} key={i} style={styles.theValue}>
+                {item}
+              </Text>
+            ))}
+          </View>
         </View>
         <View style={{ flex: 1, padding: 20 }}>
           <View style={{ alignItems: "center", flexShrink: 1 }}>
