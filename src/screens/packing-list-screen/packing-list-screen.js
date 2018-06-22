@@ -1,9 +1,12 @@
 import React from "react"
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
-import { Button } from "../../components/button"
+import { ListInput } from "../../components/list-input"
 /*
   STEP FIVE
-  • Introduce basic folder structure
+  • Create “components” folder - /components
+  • Create Button component - in /button folder
+  • Create ListInput Component - in /list-input
+
 */
 
 export class PackingListScreen extends React.Component {
@@ -13,11 +16,10 @@ export class PackingListScreen extends React.Component {
   }
 
   clearInput() {
-    this.input.clear()
     this.setState({ inputValue: null })
   }
 
-  handleInput = value => {
+  handleInput(value) {
     this.setState({ inputValue: value })
   }
 
@@ -35,24 +37,20 @@ export class PackingListScreen extends React.Component {
     this.clearInput()
   }
   checkItem(selected) {
-    const { items, selectedItems } = this.state
+    const { items } = this.state
     const newItems = items.filter(item => item !== selected)
     this.setState({ items: newItems })
   }
 
-  renderInputRow = () => {
+  renderInputRow() {
     const { inputValue } = this.state
     return (
-      <View style={styles.inputRow}>
-        <TextInput
-          ref={ref => (this.input = ref)}
-          style={styles.input}
-          value={inputValue}
-          onChangeText={this.handleInput}
-        />
-        <Button text="ADD" onPress={this.addNewItem()} />
-        <Button text="Clear" clear onPress={this.clearItems()} />
-      </View>
+      <ListInput
+        value={inputValue}
+        onChangeText={value => this.handleInput(value)}
+        onAddItem={() => this.addNewItem()}
+        onClearItems={() => this.clearItems()}
+      />
     )
   }
 
