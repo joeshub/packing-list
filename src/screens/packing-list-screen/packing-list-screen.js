@@ -6,7 +6,6 @@ import { ListInput } from "../../components/list-input"
   • Create “components” folder - /components
   • Create Button component - in /button folder
   • Create ListInput Component - in /list-input
-
 */
 
 export class PackingListScreen extends React.Component {
@@ -23,7 +22,7 @@ export class PackingListScreen extends React.Component {
     this.setState({ inputValue: value })
   }
 
-  handleAddPress = () => {
+  handleAddPress() {
     const { inputValue, items } = this.state
     if (inputValue) {
       const newItems = items.concat(inputValue)
@@ -32,7 +31,7 @@ export class PackingListScreen extends React.Component {
     }
   }
 
-  handleClearPress = () => {
+  handleClearPress() {
     this.setState({ items: [] })
     this.clearInput()
   }
@@ -49,8 +48,8 @@ export class PackingListScreen extends React.Component {
       <ListInput
         value={inputValue}
         onChangeText={value => this.handleInput(value)}
-        onAddItem={() => this.addNewItem()}
-        onClearItems={() => this.clearItems()}
+        onAddItem={() => this.handleAddPress()}
+        onClearItems={() => this.handleClearPress()}
       />
     )
   }
