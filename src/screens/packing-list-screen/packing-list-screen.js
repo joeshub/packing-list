@@ -2,11 +2,8 @@ import React from "react"
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
 
 /*
-  STEP FOUR
-  • Add ability to "check" an item
-  • Intro to ListView
-  • Bring in grid
-  • Update local state
+  STEP FIVE
+  • Introduce basic folder structure
 */
 
 export class PackingListScreen extends React.Component {
