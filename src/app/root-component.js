@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { PackingListScreen } from "../views/packing-list/packing-list-screen"
+import { PackingListScreen } from "../screens/packing-list-screen"
 
 /*
   STEP FIVE
@@ -7,9 +7,7 @@ import { PackingListScreen } from "../views/packing-list/packing-list-screen"
 */
 
 export default class RootComponent extends Component {
-  render() {
-    return (
-      <PackingListScreen />
-    )
-  }
+    render() {
+        return <PackingListScreen />
+    }
 }
