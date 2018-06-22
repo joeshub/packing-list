@@ -7,14 +7,10 @@ import { ListInput } from "../../components/list-input"
   • Integrate react-navigation
   • Pass the current items thru to packing-list-screen and display
   • Make packing-list-screen accept navigation params as state
-
 */
 
-export class PackingListScreen extends React.Component {
-  state = {
-    inputValue: null,
-    items: []
-  }
+export class InputScreen extends React.Component {
+  state = { inputValue: null }
 
   clearInput() {
     this.setState({ inputValue: null })
@@ -36,12 +32,6 @@ export class PackingListScreen extends React.Component {
   handleClearPress() {
     this.setState({ items: [] })
     this.clearInput()
-  }
-
-  checkItem(selected) {
-    const { items } = this.state
-    const newItems = items.filter(item => item !== selected)
-    this.setState({ items: newItems })
   }
 
   renderInputRow() {
@@ -75,27 +65,13 @@ export class PackingListScreen extends React.Component {
     const { items } = this.state
     return (
       <View style={styles.container}>
-        <View style={styles.topContainer}>
-          {this.renderInputRow()}
-          <View style={{ flexDirection: "row" }}>
-            {items.map((item, i) => (
-              <Text onPress={() => this.checkItem(item)} key={i} style={styles.theValue}>
-                {item}
-              </Text>
-            ))}
-          </View>
-        </View>
-        <View style={{ flex: 1, padding: 20 }}>
-          <View style={{ alignItems: "center", flexShrink: 1 }}>
-            <FlatList
-              data={items}
-              keyExtractor={item => item}
-              renderItem={({ item, index }) => this.listItems(item, index)}
-              contentContainerStyle={styles.listContainer}
-              style={styles.list}
-              numColumns={3}
-            />
-          </View>
+        {this.renderInputRow()}
+        <View style={{ flexDirection: "row" }}>
+          {items.map((item, i) => (
+            <Text onPress={() => this.checkItem(item)} key={i} style={styles.theValue}>
+              {item}
+            </Text>
+          ))}
         </View>
       </View>
     )
@@ -105,22 +81,13 @@ export class PackingListScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5FCFF"
-  },
-  topContainer: {
-    flex: 1,
-    justifyContent: "center",
+    paddingTop: "30%",
     alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "black"
+    backgroundColor: "#F5FCFF"
   },
   theValue: {
     margin: 10,
     fontSize: 18
-  },
-  list: {
-    borderWidth: 1,
-    borderColor: "lightgray"
   },
   itemWrapper: {
     borderBottomWidth: 1,
