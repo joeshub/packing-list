@@ -23,7 +23,7 @@ export class PackingListScreen extends React.Component {
     this.setState({ inputValue: value })
   }
 
-  addNewItem() {
+  handleAddPress = () => {
     const { inputValue, items } = this.state
     if (inputValue) {
       const newItems = items.concat(inputValue)
@@ -32,10 +32,11 @@ export class PackingListScreen extends React.Component {
     }
   }
 
-  clearItems() {
+  handleClearPress = () => {
     this.setState({ items: [] })
     this.clearInput()
   }
+
   checkItem(selected) {
     const { items } = this.state
     const newItems = items.filter(item => item !== selected)
@@ -126,36 +127,6 @@ const styles = StyleSheet.create({
   },
   inputRow: {
     flexDirection: "row"
-  },
-  addButton: {
-    borderRadius: 5,
-    marginLeft: 10,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 5,
-      height: 5
-    },
-    shadowOpacity: 0.9,
-    shadowColor: "black",
-    justifyContent: "center",
-    backgroundColor: "green"
-  },
-  clearButton: {
-    borderRadius: 5,
-    marginLeft: 10,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 5,
-      height: 5
-    },
-    shadowOpacity: 0.9,
-    shadowColor: "black",
-    justifyContent: "center",
-    backgroundColor: "gray"
-  },
-  buttonText: {
-    margin: 5,
-    color: "white"
   },
   list: {
     borderWidth: 1,
