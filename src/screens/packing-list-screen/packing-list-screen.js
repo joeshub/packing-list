@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
-
+import { Button } from "../../components/button"
 /*
   STEP FIVE
   • Introduce basic folder structure
@@ -50,12 +50,8 @@ export class PackingListScreen extends React.Component {
           value={inputValue}
           onChangeText={this.handleInput}
         />
-        <TouchableOpacity style={styles.addButton} onPress={() => this.addNewItem()}>
-          <Text style={styles.buttonText}>ADD</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.clearButton} onPress={() => this.clearItems()}>
-          <Text style={styles.buttonText}>Clear</Text>
-        </TouchableOpacity>
+        <Button text="ADD" onPress={this.addNewItem()} />
+        <Button text="Clear" clear onPress={this.clearItems()} />
       </View>
     )
   }
