@@ -112,20 +112,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "black"
   },
-  input: {
-    width: "50%",
-    height: 40,
-    borderColor: "lightgray",
-    borderWidth: 1,
-    padding: 5,
-    fontSize: 16
-  },
   theValue: {
     margin: 10,
     fontSize: 18
-  },
-  inputRow: {
-    flexDirection: "row"
   },
   list: {
     borderWidth: 1,
