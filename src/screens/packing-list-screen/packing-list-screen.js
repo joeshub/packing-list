@@ -52,18 +52,6 @@ export class PackingListScreen extends React.Component {
     this.setState({ items: newItems })
   }
 
-  renderInputRow() {
-    const { inputValue } = this.state
-    return (
-      <ListInput
-        value={inputValue}
-        onChangeText={value => this.handleInput(value)}
-        onAddItem={() => this.handleAddPress()}
-        onClearItems={() => this.handleClearPress()}
-      />
-    )
-  }
-
   listItems(item, index) {
     // LayoutAnimation.spring()
     const borderRightWidth = index % 1 > 0 ? 0 : 1
