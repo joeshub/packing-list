@@ -7,7 +7,12 @@ export class ListInput extends React.Component {
     const { value, onChangeText, onAddItem, onClearItems } = this.props
     return (
       <View style={styles.inputRow}>
-        <TextInput style={styles.input} value={value} onChangeText={val => onChangeText(val)} />
+        <TextInput
+          autoFocus
+          style={styles.input}
+          value={value}
+          onChangeText={val => onChangeText(val)}
+        />
         <Button text="ADD" onPress={() => onAddItem()} />
         <Button text="Clear" clear onPress={() => onClearItems()} />
       </View>
