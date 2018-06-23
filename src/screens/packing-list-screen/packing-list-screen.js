@@ -66,18 +66,6 @@ export class PackingListScreen extends React.Component {
     navigation.setParams({ items: newItems })
   }
 
-  renderInputRow() {
-    const { inputValue } = this.state
-    return (
-      <ListInput
-        value={inputValue}
-        onChangeText={value => this.handleInput(value)}
-        onAddItem={() => this.handleAddPress()}
-        onClearItems={() => this.handleClearPress()}
-      />
-    )
-  }
-
   listItems(item, index) {
     // LayoutAnimation.spring()
     const backgroundColor = index % 2 === 0 ? "dodgerblue" : "indigo"
