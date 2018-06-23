@@ -3,10 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "r
 import { ListInput } from "../../components/list-input"
 
 export class InputScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { inputValue: null, items: [] }
-  }
+  state = { inputValue: null, items: [] }
 
   componentDidMount() {
     this.setState({ items: this.props.navigation.getParam("items", []) })
