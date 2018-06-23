@@ -2,15 +2,23 @@ import React from "react"
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
 import { ListInput } from "../../components/list-input"
 /*
-  STEP SEVEN
+  STEP SEVEN - a
   • Create an input-screen
   • Integrate react-navigation
-  • Pass the current items thru to packing-list-screen and display
-  • Make packing-list-screen accept navigation params as state
-
 */
 
 export class PackingListScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: "Packing List",
+      headerRight: (
+        <Text style={{ marginRight: 10 }} onPress={() => navigation.navigate("Input")}>
+          Input
+        </Text>
+      )
+    }
+  }
+
   state = {
     inputValue: null,
     items: []

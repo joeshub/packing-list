@@ -10,7 +10,7 @@ import { ListInput } from "../../components/list-input"
 */
 
 export class InputScreen extends React.Component {
-  state = { inputValue: null }
+  state = { inputValue: null, items: [] }
 
   clearInput() {
     this.setState({ inputValue: null })

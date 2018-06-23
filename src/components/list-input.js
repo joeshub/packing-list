@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
     borderColor: "lightgray",
     borderWidth: 1,
     padding: 5,
-    fontSize: 16
+    fontSize: 16,
+    backgroundColor: "white"
   },
   inputRow: {
     flexDirection: "row"
