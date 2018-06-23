@@ -1,45 +1,47 @@
 import React from "react"
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native"
 import { ListInput } from "../../components/list-input"
 
 export class InputScreen extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { inputValue: null, items: [] }
-  }
-
-  componentDidMount() {
-    this.setState({ items: this.props.navigation.getParam("items", []) })
+    const items = props.navigation.getParam("items", [])
+    this.state = { items }
   }
 
   clearInput() {
     const { navigation } = this.props
-    const onClear = navigation.getParam("onClear", null)
-    onClear()
-    this.setState({ inputValue: null, items: [] })
+    const setInputValue = navigation.getParam("setInputValue", null)
+    setInputValue(null)
   }
 
   handleInput(value) {
-    this.setState({ inputValue: value })
+    const setInputValue = this.props.navigation.getParam("setInputValue", null)
+    setInputValue(value)
   }
 
   handleAddPress() {
-    const onAdd = this.props.navigation.getParam("onAdd", null)
-    if (this.state.inputValue) {
-      onAdd(this.state.inputValue)
-      this.props.navigation.goBack()
-    }
+    const { navigation } = this.props
+    const onAdd = navigation.getParam("onAdd", null)
+    onAdd()
+    navigation.goBack()
   }
 
   handleClearPress() {
+    const { navigation } = this.props
+    const onClear = navigation.getParam("onClear", null)
+    onClear()
     this.setState({ items: [] })
     this.clearInput()
   }
 
   renderInputRow() {
+    const { navigation } = this.props
+    const inputValue = navigation.getParam("inputValue", null)
+    const onAdd = navigation.getParam("onAdd", null)
     return (
       <ListInput
-        value={this.state.inputValue}
+        value={inputValue}
         onChangeText={value => this.handleInput(value)}
         onAddItem={() => this.handleAddPress()}
         onClearItems={() => this.handleClearPress()}

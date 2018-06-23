@@ -1,11 +1,10 @@
 import React from "react"
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native"
 import { ListInput } from "../../components/list-input"
 
 /*
-  STEP SEVEN - b
-  • Pass the current items thru to input-screen and display
-  • Swap local state for navigation state on packing-list-screen
+  STEP SEVEN - c
+  • Integrate navigation state on input-screen
 */
 
 export class PackingListScreen extends React.Component {
@@ -19,7 +18,9 @@ export class PackingListScreen extends React.Component {
             navigation.navigate("Input", {
               items: navigation.getParam("items", []),
               onAdd: navigation.getParam("onAdd", null),
-              onClear: navigation.getParam("onClear", null)
+              onClear: navigation.getParam("onClear", null),
+              inputValue: navigation.getParam("inputValue", null),
+              setInputValue: navigation.getParam("setInputValue", null)
             })
           }
         >
@@ -32,23 +33,30 @@ export class PackingListScreen extends React.Component {
   componentDidMount() {
     this.props.navigation.setParams({
       items: [],
-      onAdd: val => this.handleAddPress(val),
-      onClear: () => this.handleClearPress()
+      inputValue: null,
+      onAdd: () => this.handleAddPress(),
+      onClear: () => this.handleClearPress(),
+      setInputValue: val => this.handleInputValue(val)
     })
   }
 
-  handleAddPress(value) {
+  handleInputValue(value) {
+    this.props.navigation.setParams({ inputValue: value })
+  }
+
+  handleAddPress() {
     const { navigation } = this.props
     const items = navigation.getParam("items", [])
-    if (value) {
-      const newItems = items.concat(value)
-      navigation.setParams({ items: newItems })
+    const inputValue = navigation.getParam("inputValue", null)
+    if (inputValue) {
+      const newItems = items.concat(inputValue)
+      navigation.setParams({ items: newItems, inputValue: null })
     }
   }
 
   handleClearPress() {
     const { navigation } = this.props
-    navigation.setParams({ items: [] })
+    navigation.setParams({ items: [], inputValue: null })
   }
 
   checkItem(selected) {
