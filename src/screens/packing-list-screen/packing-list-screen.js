@@ -75,28 +75,14 @@ export class PackingListScreen extends React.Component {
     const { items } = this.state
     return (
       <View style={styles.container}>
-        <View style={styles.topContainer}>
-          {this.renderInputRow()}
-          <View style={{ flexDirection: "row" }}>
-            {items.map((item, i) => (
-              <Text onPress={() => this.checkItem(item)} key={i} style={styles.theValue}>
-                {item}
-              </Text>
-            ))}
-          </View>
-        </View>
-        <View style={{ flex: 1, padding: 20 }}>
-          <View style={{ alignItems: "center", flexShrink: 1 }}>
-            <FlatList
-              data={items}
-              keyExtractor={item => item}
-              renderItem={({ item, index }) => this.listItems(item, index)}
-              contentContainerStyle={styles.listContainer}
-              style={styles.list}
-              numColumns={3}
-            />
-          </View>
-        </View>
+        <FlatList
+          data={items}
+          keyExtractor={item => item}
+          renderItem={({ item, index }) => this.listItems(item, index)}
+          contentContainerStyle={styles.listContainer}
+          style={styles.list}
+          numColumns={3}
+        />
       </View>
     )
   }
@@ -107,20 +93,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F5FCFF"
   },
-  topContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "black"
-  },
-  theValue: {
-    margin: 10,
-    fontSize: 18
-  },
   list: {
+    padding: 20,
     borderWidth: 1,
     borderColor: "lightgray"
+  },
+  listContainer: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "lightgray",
+    backgroundColor: "white"
   },
   itemWrapper: {
     borderBottomWidth: 1,
