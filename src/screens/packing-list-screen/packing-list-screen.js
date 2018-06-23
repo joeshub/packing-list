@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native
 import { ListInput } from "../../components/list-input"
 
 /*
-  STEP SEVEN - c
-  • Integrate navigation state on input-screen
+  STEP SEVEN - d
+  • Refactor exercise
 */
 
 export class PackingListScreen extends React.Component {
@@ -31,7 +31,7 @@ export class PackingListScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({
+    this.setNavState({
       items: [],
       inputValue: null,
       onAdd: () => this.handleAddPress(),
@@ -40,8 +40,13 @@ export class PackingListScreen extends React.Component {
     })
   }
 
+  setNavState(newState) {
+    const currentState = this.props.navigation.state.params
+    this.props.navigation.setParams({ ...newState })
+  }
+
   handleInputValue(value) {
-    this.props.navigation.setParams({ inputValue: value })
+    this.setNavState({ inputValue: value })
   }
 
   handleAddPress() {
@@ -50,32 +55,19 @@ export class PackingListScreen extends React.Component {
     const inputValue = navigation.getParam("inputValue", null)
     if (inputValue) {
       const newItems = items.concat(inputValue)
-      navigation.setParams({ items: newItems, inputValue: null })
+      this.setNavState({ items: newItems, inputValue: null })
     }
   }
 
   handleClearPress() {
-    const { navigation } = this.props
-    navigation.setParams({ items: [], inputValue: null })
+    this.setNavState({ items: [], inputValue: null })
   }
 
   checkItem(selected) {
     const { navigation } = this.props
     const items = navigation.getParam("items", [])
     const newItems = items.filter(item => item !== selected)
-    navigation.setParams({ items: newItems })
-  }
-
-  renderInputRow() {
-    const { inputValue } = this.state
-    return (
-      <ListInput
-        value={inputValue}
-        onChangeText={value => this.handleInput(value)}
-        onAddItem={() => this.handleAddPress()}
-        onClearItems={() => this.handleClearPress()}
-      />
-    )
+    this.setNavState({ items: newItems })
   }
 
   listItems(item, index) {

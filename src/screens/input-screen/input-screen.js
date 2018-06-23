@@ -5,43 +5,38 @@ import { ListInput } from "../../components/list-input"
 export class InputScreen extends React.Component {
   constructor(props) {
     super(props)
-    const items = props.navigation.getParam("items", [])
+    const { navigation } = props
+    const items = navigation.getParam("items", [])
     this.state = { items }
+    this.onClear = navigation.getParam("onClear", null)
+    this.onAdd = navigation.getParam("onAdd", null)
+    this.setInputValue = navigation.getParam("setInputValue", null)
   }
 
   clearInput() {
-    const { navigation } = this.props
-    const setInputValue = navigation.getParam("setInputValue", null)
-    setInputValue(null)
+    this.setInputValue(null)
   }
 
   handleInput(value) {
-    const setInputValue = this.props.navigation.getParam("setInputValue", null)
-    setInputValue(value)
+    this.setInputValue(value)
   }
 
   handleAddPress() {
     const { navigation } = this.props
-    const onAdd = navigation.getParam("onAdd", null)
-    onAdd()
+    this.onAdd()
     navigation.goBack()
   }
 
   handleClearPress() {
-    const { navigation } = this.props
-    const onClear = navigation.getParam("onClear", null)
-    onClear()
+    this.onClear()
     this.setState({ items: [] })
     this.clearInput()
   }
 
   renderInputRow() {
-    const { navigation } = this.props
-    const inputValue = navigation.getParam("inputValue", null)
-    const onAdd = navigation.getParam("onAdd", null)
     return (
       <ListInput
-        value={inputValue}
+        value={this.inputValue}
         onChangeText={value => this.handleInput(value)}
         onAddItem={() => this.handleAddPress()}
         onClearItems={() => this.handleClearPress()}
