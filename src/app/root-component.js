@@ -16,7 +16,7 @@ const RootStack = createStackNavigator(
 
 export class RootStore extends Container {
   state = {
-    items: ["Shoes", "Socks"],
+    items: [],
     inputValue: null
   }
 
