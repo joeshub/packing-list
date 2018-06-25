@@ -1,10 +1,12 @@
 import React from "react"
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native"
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from "react-native"
 import { ListInput } from "../../components/list-input"
 
 /*
-  STEP SEVEN - d
-  • Refactor exercise
+  STEP EIGHT
+  • Bring in AsyncStorage
+  • Store updated items in AsyncStorage
+  • Persisted state (close & re-open app with same data)
 */
 
 export class PackingListScreen extends React.Component {
@@ -32,11 +34,19 @@ export class PackingListScreen extends React.Component {
 
   componentDidMount() {
     this.setNavState({
-      items: [],
       inputValue: null,
       onAdd: () => this.handleAddPress(),
       onClear: () => this.handleClearPress(),
       setInputValue: val => this.handleInputValue(val)
+    })
+    AsyncStorage.getItem("items").then(response => {
+      if (!response) {
+        AsyncStorage.setItem("items", JSON.stringify([]))
+        this.setNavState({ items: [] })
+      } else {
+        const items = JSON.parse(response)
+        this.setNavState({ items })
+      }
     })
   }
 
@@ -56,11 +66,13 @@ export class PackingListScreen extends React.Component {
     if (inputValue) {
       const newItems = items.concat(inputValue)
       this.setNavState({ items: newItems, inputValue: null })
+      AsyncStorage.setItem("items", JSON.stringify(newItems))
     }
   }
 
   handleClearPress() {
     this.setNavState({ items: [], inputValue: null })
+    AsyncStorage.setItem("items", JSON.stringify([]))
   }
 
   checkItem(selected) {
@@ -68,6 +80,7 @@ export class PackingListScreen extends React.Component {
     const items = navigation.getParam("items", [])
     const newItems = items.filter(item => item !== selected)
     this.setNavState({ items: newItems })
+    AsyncStorage.setItem("items", JSON.stringify(newItems))
   }
 
   listItems(item, index) {
