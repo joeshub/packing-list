@@ -5,7 +5,8 @@ import { Subscribe } from "unstated"
 import { RootStore } from "../../app/root-component"
 /*
   STEP NINE
-  • Convert AsyncStorage → Unstated (https://github.com/jamiebuilds/unstated)
+  • Manage state with Unstated (https://github.com/jamiebuilds/unstated)
+  • Persist data with AsyncStorage in root-component
   • Convert packing-list-screen & input-screen → Tabs Navigator
 */
 
