@@ -6,22 +6,11 @@ import { RootStore } from "../../app/root-component"
 /*
   STEP NINE
   • Manage state with Unstated (https://github.com/jamiebuilds/unstated)
-  • Persist data with AsyncStorage in root-component
+  • Persist data with AsyncStorage in root-component exercise <==
   • Convert packing-list-screen & input-screen → Tabs Navigator
 */
 
 export class PackingListScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerTitle: "Packing List",
-      headerRight: (
-        <Text style={{ marginRight: 10 }} onPress={() => navigation.navigate("Input")}>
-          Input
-        </Text>
-      )
-    }
-  }
-
   listItems(item, index, store) {
     const backgroundColor = index % 2 === 0 ? "dodgerblue" : "indigo"
     return (

@@ -7,18 +7,16 @@ import { RootStore } from "../../app/root-component"
 export class InputScreen extends React.Component {
   handleAddPress(store) {
     store.addItem()
-    this.props.navigation.goBack()
   }
 
   handleClearPress(store) {
     store.clearItems()
-    this.props.navigation.goBack()
   }
 
   renderInputRow(store) {
     return (
       <ListInput
-        value={this.inputValue}
+        value={store.state.inputValue}
         onChangeText={value => store.handleInput(value)}
         onAddItem={() => this.handleAddPress(store)}
         onClearItems={() => this.handleClearPress(store)}

@@ -1,16 +1,63 @@
 import React, { Component } from "react"
 import { PackingListScreen } from "../screens/packing-list-screen"
 import { InputScreen } from "../screens/input-screen"
-import { createStackNavigator } from "react-navigation"
+import { createBottomTabNavigator, createStackNavigator } from "react-navigation"
 import { Provider, Container } from "unstated"
+import { Text, View } from "react-native"
 
-const RootStack = createStackNavigator(
+const RootStack = createBottomTabNavigator(
   {
-    Home: PackingListScreen,
-    Input: InputScreen
+    Home: createStackNavigator(
+      { PackingListScreen },
+      {
+        navigationOptions: () => ({
+          title: "Packing List"
+        })
+      }
+    ),
+    Input: createStackNavigator(
+      { InputScreen },
+      {
+        navigationOptions: () => ({
+          title: "ADD ITEM"
+        })
+      }
+    )
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Home",
+    navigationOptions: ({ navigation, focused }) => ({
+      tabBarOptions: {
+        labelStyle: {
+          fontSize: 16,
+          bottom: 12
+        }
+      },
+      title: "Header title",
+      tabBarLabel: ({ focused, tintColor }) => {
+        return (
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              height: "100%",
+              backgroundColor: focused ? "royalblue" : "transparent"
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: focused ? "800" : "100",
+                color: focused ? "white" : "black"
+              }}
+            >
+              {navigation.state.routeName}
+            </Text>
+          </View>
+        )
+      }
+    })
   }
 )
 
