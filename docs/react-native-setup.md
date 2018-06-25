@@ -26,7 +26,7 @@ On [React Native's website](https://facebook.github.io/react-native/docs/getting
 
 _Screenshot of "Bulding Projects with Native Code" tab:_
 
-![native](https://i.imgur.com/gFJePnY.png)
+![native](https://i.imgur.com/D8igZYp.png)
 
 **For Mac**
 
