@@ -1,62 +1,47 @@
 import React from "react"
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native"
 import { ListInput } from "../../components/list-input"
+import { Subscribe } from "unstated"
+import { RootStore } from "../../app/root-component"
 
 export class InputScreen extends React.Component {
-  constructor(props) {
-    super(props)
-    const { navigation } = props
-    const items = navigation.getParam("items", [])
-    this.state = { items }
-    this.onClear = navigation.getParam("onClear", null)
-    this.onAdd = navigation.getParam("onAdd", null)
-    this.setInputValue = navigation.getParam("setInputValue", null)
+  handleAddPress(store) {
+    store.addItem()
+    this.props.navigation.goBack()
   }
 
-  clearInput() {
-    this.setInputValue(null)
+  handleClearPress(store) {
+    store.clearItems()
+    this.props.navigation.goBack()
   }
 
-  handleInput(value) {
-    this.setInputValue(value)
-  }
-
-  handleAddPress() {
-    const { navigation } = this.props
-    this.onAdd()
-    navigation.goBack()
-  }
-
-  handleClearPress() {
-    this.onClear()
-    this.setState({ items: [] })
-    this.clearInput()
-  }
-
-  renderInputRow() {
+  renderInputRow(store) {
     return (
       <ListInput
         value={this.inputValue}
-        onChangeText={value => this.handleInput(value)}
-        onAddItem={() => this.handleAddPress()}
-        onClearItems={() => this.handleClearPress()}
+        onChangeText={value => store.handleInput(value)}
+        onAddItem={() => this.handleAddPress(store)}
+        onClearItems={() => this.handleClearPress(store)}
       />
     )
   }
 
   render() {
-    const { items } = this.state
     return (
-      <View style={styles.container}>
-        {this.renderInputRow()}
-        <View style={{ flexDirection: "row" }}>
-          {items.map((item, i) => (
-            <Text key={i} style={styles.theValue}>
-              {item}
-            </Text>
-          ))}
-        </View>
-      </View>
+      <Subscribe to={[RootStore]}>
+        {store => (
+          <View style={styles.container}>
+            {this.renderInputRow(store)}
+            <View style={{ flexDirection: "row" }}>
+              {store.state.items.map((item, i) => (
+                <Text key={i} style={styles.theValue}>
+                  {item}
+                </Text>
+              ))}
+            </View>
+          </View>
+        )}
+      </Subscribe>
     )
   }
 }
