@@ -1,58 +1,52 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+import React, { Component } from "react"
+import { StyleSheet, Text, View, TextInput } from "react-native"
 
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+/*
+  STEP ONE
+  • Introduce local state
+  • Able to write to and read from local state
+*/
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+export default class App extends Component {
+  state = {
+    inputValue: null
+  }
 
-type Props = {};
-export default class App extends Component<Props> {
+  handleInput(value) {
+    this.setState({ inputValue: value })
+  }
+
   render() {
+    const { inputValue } = this.state
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <TextInput
+          style={styles.input}
+          value={inputValue}
+          onChangeText={val => this.handleInput(val)}
+        />
+        <Text style={styles.theValue}>{inputValue}</Text>
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: "#F5FCFF",
+    justifyContent: "center",
+    alignItems: "center"
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
+  input: {
+    width: "50%",
+    height: 40,
+    borderColor: "lightgray",
+    borderWidth: 1,
+    padding: 5
+  },
+  theValue: {
     margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+    fontSize: 18
+  }
+})
