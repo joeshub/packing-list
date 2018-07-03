@@ -21,7 +21,8 @@ export class PackingListScreen extends React.Component {
 
   state = {
     inputValue: null,
-    items: []
+    items: [],
+    checkedItems: []
   }
 
   clearInput() {
@@ -35,7 +36,7 @@ export class PackingListScreen extends React.Component {
   handleAddPress() {
     const { inputValue, items } = this.state
     if (inputValue) {
-      const newItems = items.concat(inputValue)
+      const newItems = [...items, inputValue]
       this.setState({ items: newItems })
       this.clearInput()
     }
@@ -52,14 +53,13 @@ export class PackingListScreen extends React.Component {
     this.setState({ items: newItems })
   }
 
-  listItems(item, index) {
-    // LayoutAnimation.spring()
-    const borderRightWidth = index % 1 > 0 ? 0 : 1
-    const borderBottomWidth = this.state.items.length - 3 > index ? 1 : 0
+  listItems = (item, index) => {
+    const { checkedItems } = this.state
+    const backgroundColor = checkedItems.includes(item) ? "dodgerblue" : "indigo"
     return (
       <TouchableOpacity
         onPress={() => this.checkItem(item)}
-        style={[styles.itemWrapper, { borderRightWidth, borderBottomWidth }]}
+        style={[styles.itemWrapper, { backgroundColor }]}
         key={index}
       >
         <Text style={styles.item}>{item.toUpperCase()}</Text>
@@ -68,11 +68,12 @@ export class PackingListScreen extends React.Component {
   }
 
   render() {
-    const { items } = this.state
+    const { items, checkedItems } = this.state
     return (
       <View style={styles.container}>
         <FlatList
           data={items}
+          extraData={{ data: checkedItems.length }}
           keyExtractor={item => item}
           renderItem={({ item, index }) => this.listItems(item, index)}
           contentContainerStyle={styles.listContainer}
