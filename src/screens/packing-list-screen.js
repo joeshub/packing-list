@@ -4,6 +4,9 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "r
 /*
   STEP FIVE
   • Introduce basic folder structure
+  • /app
+  • /screens
+
 */
 
 export class PackingListScreen extends React.Component {
@@ -25,7 +28,7 @@ export class PackingListScreen extends React.Component {
   addNewItem() {
     const { inputValue, items } = this.state
     if (inputValue) {
-      const newItems = items.concat(inputValue)
+      const newItems = [...items, inputValue]
       this.setState({ items: newItems })
       this.clearInput()
     }
