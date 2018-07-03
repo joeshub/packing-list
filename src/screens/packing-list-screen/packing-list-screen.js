@@ -33,6 +33,7 @@ export class PackingListScreen extends React.Component {
   componentDidMount() {
     this.props.navigation.setParams({
       items: [],
+      checkedItems: [],
       inputValue: null,
       onAdd: () => this.handleAddPress(),
       onClear: () => this.handleClearPress(),
@@ -49,7 +50,7 @@ export class PackingListScreen extends React.Component {
     const items = navigation.getParam("items", [])
     const inputValue = navigation.getParam("inputValue", null)
     if (inputValue) {
-      const newItems = items.concat(inputValue)
+      const newItems = [...items, inputValue]
       navigation.setParams({ items: newItems, inputValue: null })
     }
   }
@@ -61,14 +62,19 @@ export class PackingListScreen extends React.Component {
 
   checkItem(selected) {
     const { navigation } = this.props
-    const items = navigation.getParam("items", [])
-    const newItems = items.filter(item => item !== selected)
-    navigation.setParams({ items: newItems })
+    const checkedItems = navigation.getParam("checkedItems", [])
+    let newCheckedItems
+    if (checkedItems.includes(selected)) {
+      newCheckedItems = checkedItems.filter(item => item !== selected)
+    } else {
+      newCheckedItems = [...checkedItems, selected]
+    }
+    navigation.setParams({ checkedItems: newCheckedItems })
   }
 
-  listItems(item, index) {
-    // LayoutAnimation.spring()
-    const backgroundColor = index % 2 === 0 ? "dodgerblue" : "indigo"
+  listItems = (item, index) => {
+    const checkedItems = this.props.navigation.getParam("checkedItems", [])
+    const backgroundColor = checkedItems.includes(item) ? "dodgerblue" : "indigo"
     return (
       <TouchableOpacity
         onPress={() => this.checkItem(item)}
@@ -83,10 +89,12 @@ export class PackingListScreen extends React.Component {
   render() {
     const { navigation } = this.props
     const items = navigation.getParam("items", [])
+    const checkedItems = navigation.getParam("checkedItems", [])
     return (
       <View style={styles.container}>
         <FlatList
           data={items}
+          extraData={{ data: checkedItems.length }}
           keyExtractor={item => item}
           renderItem={({ item, index }) => this.listItems(item, index)}
           contentContainerStyle={styles.listContainer}
