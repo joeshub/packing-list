@@ -107,12 +107,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   itemWrapper: {
-    margin: 2,
     flex: 1,
+    margin: 2,
     justifyContent: "center"
   },
   item: {
-    flex: 1,
     margin: 5,
     fontSize: 18,
     color: "white",
