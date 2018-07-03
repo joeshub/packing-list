@@ -115,17 +115,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   itemWrapper: {
-    borderBottomWidth: 1,
-    borderColor: "lightgray",
-    height: 40,
     flex: 1,
-    alignItems: "center",
+    margin: 2,
     justifyContent: "center"
   },
   item: {
     margin: 5,
     fontSize: 18,
+    color: "white",
     fontWeight: "bold",
-    color: "bisque"
+    alignSelf: "center"
   }
 })
