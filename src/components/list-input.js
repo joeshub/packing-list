@@ -8,10 +8,10 @@ export class ListInput extends React.Component {
     return (
       <View style={styles.inputRow}>
         <TextInput
-          autoFocus
           style={styles.input}
           value={value}
           onChangeText={val => onChangeText(val)}
+          autoFocus
         />
         <Button text="ADD" onPress={() => onAddItem()} />
         <Button text="Clear" clear onPress={() => onClearItems()} />
