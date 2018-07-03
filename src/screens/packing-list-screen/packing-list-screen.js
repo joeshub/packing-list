@@ -48,9 +48,14 @@ export class PackingListScreen extends React.Component {
   }
 
   checkItem(selected) {
-    const { items } = this.state
-    const newItems = items.filter(item => item !== selected)
-    this.setState({ items: newItems })
+    const { checkedItems } = this.state
+    let newCheckedItems
+    if (checkedItems.includes(selected)) {
+      newCheckedItems = checkedItems.filter(item => item !== selected)
+    } else {
+      newCheckedItems = [...checkedItems, selected]
+    }
+    this.setState({ checkedItems: newCheckedItems })
   }
 
   listItems = (item, index) => {
