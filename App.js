@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "react-native"
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native"
 
 /*
   STEP THREE
@@ -12,7 +12,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "r
 export default class App extends Component {
   state = {
     inputValue: null,
-    items: []
+    items: [],
+    checkedItems: []
   }
 
   handleInput = value => {
@@ -31,9 +32,14 @@ export default class App extends Component {
     this.input.clear()
   }
   checkItem(selected) {
-    const { items } = this.state
-    const newItems = items.filter(item => item !== selected)
-    this.setState({ items: newItems })
+    const { checkedItems } = this.state
+    let newCheckedItems
+    if (checkedItems.includes(selected)) {
+      newCheckedItems = checkedItems.filter(item => item !== selected)
+    } else {
+      newCheckedItems = [...checkedItems, selected]
+    }
+    this.setState({ checkedItems: newCheckedItems })
   }
 
   renderInputRow = () => {
@@ -56,30 +62,25 @@ export default class App extends Component {
     )
   }
 
-  listItems(item, index) {
-    const borderRightWidth = index % 1 > 0 ? 0 : 1
-    const borderBottomWidth = this.state.items.length - 3 > index ? 1 : 0
-    return (
-      <TouchableOpacity
-        onPress={() => this.checkItem(item)}
-        style={[styles.itemWrapper, { borderRightWidth, borderBottomWidth }]}
-        key={index}
-      >
-        <Text style={styles.item}>{item.toUpperCase()}</Text>
-      </TouchableOpacity>
-    )
-  }
-
   render() {
-    const { items } = this.state
+    const { items, checkedItems } = this.state
     return (
       <View style={styles.container}>
         {this.renderInputRow()}
-        {items.map((item, i) => (
-          <Text key={i} style={styles.theValue}>
-            {item}
-          </Text>
-        ))}
+        <View style={{ marginTop: 20 }}>
+          {items.map((item, index) => {
+            const backgroundColor = checkedItems.includes(item) ? "dodgerblue" : "indigo"
+            return (
+              <TouchableOpacity
+                onPress={() => this.checkItem(item)}
+                style={[styles.itemWrapper, { backgroundColor }]}
+                key={index}
+              >
+                <Text style={styles.item}>{item.toUpperCase()}</Text>
+              </TouchableOpacity>
+            )
+          })}
+        </View>
       </View>
     )
   }
@@ -120,5 +121,18 @@ const styles = StyleSheet.create({
   buttonText: {
     margin: 5,
     color: "white"
+  },
+  itemWrapper: {
+    margin: 2,
+    height: 40,
+    width: 100,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  item: {
+    margin: 5,
+    fontSize: 18,
+    color: "white",
+    fontWeight: "bold"
   }
 })
