@@ -33,7 +33,7 @@ export class InputScreen extends React.Component {
             <View style={{ flexDirection: "row" }}>
               {store.state.items.map((item, i) => (
                 <Text key={i} style={styles.theValue}>
-                  {item}
+                  {item.name}
                 </Text>
               ))}
             </View>

@@ -12,14 +12,14 @@ import { RootStore } from "../../app/root-component"
 
 export class PackingListScreen extends React.Component {
   listItems(item, index, store) {
-    const backgroundColor = index % 2 === 0 ? "dodgerblue" : "indigo"
+    const backgroundColor = item.checked ? "dodgerblue" : "indigo"
     return (
       <TouchableOpacity
         onPress={() => store.checkItem(item, store)}
         style={[styles.itemWrapper, { backgroundColor }]}
         key={index}
       >
-        <Text style={styles.item}>{item.toUpperCase()}</Text>
+        <Text style={styles.item}>{item.name.toUpperCase()}</Text>
       </TouchableOpacity>
     )
   }
@@ -63,17 +63,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   itemWrapper: {
-    borderBottomWidth: 1,
-    borderColor: "lightgray",
-    height: 40,
     flex: 1,
-    alignItems: "center",
+    margin: 2,
     justifyContent: "center"
   },
   item: {
     margin: 5,
     fontSize: 18,
     fontWeight: "bold",
-    color: "bisque"
+    color: "bisque",
+    alignSelf: "center"
   }
 })

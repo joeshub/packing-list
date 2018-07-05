@@ -76,7 +76,7 @@ export class RootStore extends Container {
 
   addItem = () => {
     const { items, inputValue } = this.state
-    const newItems = items.concat(inputValue)
+    const newItems = [...items, { name: inputValue, checked: false }]
     this.setState({
       items: newItems,
       inputValue: null
@@ -90,8 +90,13 @@ export class RootStore extends Container {
     })
   }
 
-  checkItem = selected => {
-    const newItems = this.state.items.filter(item => item !== selected)
+  checkItem = selectedItem => {
+    const selectedName = selectedItem.name
+    const newItems = this.state.items.map(item => {
+      const { name, checked } = item
+      return name === selectedName ? { name: name, checked: !checked } : item
+    })
+
     this.setState({ items: newItems })
   }
 }
