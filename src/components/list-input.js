@@ -12,6 +12,8 @@ export class ListInput extends React.Component {
           style={styles.input}
           value={value}
           onChangeText={val => onChangeText(val)}
+          onSubmitEditing={() => onAddItem()}
+          returnKeyType="done"
         />
         <Button text="ADD" onPress={() => onAddItem()} />
         <Button text="Clear" clear onPress={() => onClearItems()} />

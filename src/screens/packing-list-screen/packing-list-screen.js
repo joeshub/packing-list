@@ -64,9 +64,10 @@ export class PackingListScreen extends React.Component {
     const items = navigation.getParam("items", [])
     const inputValue = navigation.getParam("inputValue", null)
     if (inputValue) {
-      const newItems = items.concat(inputValue)
-      this.setNavState({ items: newItems, inputValue: null })
+      const newItems = [...items, { name: inputValue, checked: false }]
       AsyncStorage.setItem("items", JSON.stringify(newItems))
+      this.setNavState({ items: newItems, inputValue: null })
+      navigation.goBack(null)
     }
   }
 
@@ -75,24 +76,28 @@ export class PackingListScreen extends React.Component {
     AsyncStorage.setItem("items", JSON.stringify([]))
   }
 
-  checkItem(selected) {
+  checkItem(selectedItem) {
     const { navigation } = this.props
+    const selectedName = selectedItem.name
     const items = navigation.getParam("items", [])
-    const newItems = items.filter(item => item !== selected)
-    this.setNavState({ items: newItems })
+    const newItems = items.map(item => {
+      const { name, checked } = item
+      return name === selectedName ? { name: name, checked: !checked } : item
+    })
+
     AsyncStorage.setItem("items", JSON.stringify(newItems))
+    this.setNavState({ items: newItems })
   }
 
-  listItems(item, index) {
-    // LayoutAnimation.spring()
-    const backgroundColor = index % 2 === 0 ? "dodgerblue" : "indigo"
+  listItems = (item, index) => {
+    const backgroundColor = item.checked ? "dodgerblue" : "indigo"
     return (
       <TouchableOpacity
         onPress={() => this.checkItem(item)}
         style={[styles.itemWrapper, { backgroundColor }]}
         key={index}
       >
-        <Text style={styles.item}>{item.toUpperCase()}</Text>
+        <Text style={styles.item}>{item.name.toUpperCase()}</Text>
       </TouchableOpacity>
     )
   }
@@ -132,17 +137,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   itemWrapper: {
-    borderBottomWidth: 1,
-    borderColor: "lightgray",
-    height: 40,
     flex: 1,
-    alignItems: "center",
+    margin: 2,
     justifyContent: "center"
   },
   item: {
     margin: 5,
     fontSize: 18,
     fontWeight: "bold",
-    color: "bisque"
+    color: "bisque",
+    alignSelf: "center"
   }
 })

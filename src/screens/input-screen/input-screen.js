@@ -24,7 +24,6 @@ export class InputScreen extends React.Component {
   handleAddPress() {
     const { navigation } = this.props
     this.onAdd()
-    navigation.goBack()
   }
 
   handleClearPress() {
@@ -52,7 +51,7 @@ export class InputScreen extends React.Component {
         <View style={{ flexDirection: "row" }}>
           {items.map((item, i) => (
             <Text key={i} style={styles.theValue}>
-              {item}
+              {item.name}
             </Text>
           ))}
         </View>
