@@ -32,6 +32,17 @@ export class PackingListScreen extends React.Component {
     }
   }
 
+  refreshData = async () => {
+    const items = await AsyncStorage.getItem("items")
+    if (!items) {
+      AsyncStorage.setItem("items", JSON.stringify([]))
+      this.setNavState({ items: [] })
+    } else {
+      const refreshedItems = JSON.parse(items)
+      this.setNavState({ items: refreshedItems })
+    }
+  }
+
   componentDidMount() {
     this.setNavState({
       inputValue: null,
@@ -39,15 +50,7 @@ export class PackingListScreen extends React.Component {
       onClear: () => this.handleClearPress(),
       setInputValue: val => this.handleInputValue(val)
     })
-    AsyncStorage.getItem("items").then(response => {
-      if (!response) {
-        AsyncStorage.setItem("items", JSON.stringify([]))
-        this.setNavState({ items: [] })
-      } else {
-        const items = JSON.parse(response)
-        this.setNavState({ items })
-      }
-    })
+    this.refreshData()
   }
 
   setNavState(newState) {
