@@ -42,7 +42,7 @@ const RootStack = createBottomTabNavigator(
               color={tintColor}
               name="md-add"
               size={16}
-              style={{ position: "absolute", top: -7, left: -3.5 }}
+              style={{ position: "absolute", top: -6, left: -4 }}
             />
           </View>
         )
@@ -68,12 +68,16 @@ export class RootStore extends Container {
 
   addItem = () => {
     const { items, inputValue } = this.state
-    const newItems = [...items, { name: inputValue, checked: false }]
-    this.setState({
-      items: newItems,
-      inputValue: null
-    })
-    AsyncStorage.setItem("items", JSON.stringify(newItems))
+    if (inputValue) {
+      const newItems = [...items, { name: inputValue, checked: false }]
+      this.setState({
+        items: newItems,
+        inputValue: null
+      })
+      AsyncStorage.setItem("items", JSON.stringify(newItems))
+    } else {
+      alert("Please enter an item!")
+    }
   }
 
   clearItems = () => {
@@ -81,6 +85,7 @@ export class RootStore extends Container {
       items: [],
       inputValue: null
     })
+    AsyncStorage.setItem("items", JSON.stringify([]))
   }
 
   checkItem = selectedItem => {

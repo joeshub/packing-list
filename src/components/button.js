@@ -10,6 +10,7 @@ export class Button extends React.Component {
       <TouchableOpacity
         style={[styles.root, { backgroundColor: active ? infiniteRed : rainCloud }]}
         onPress={() => onPress()}
+        enabled={active}
       >
         <Text style={[styles.buttonText, { color: active ? pureWhite : dim }]}>{text}</Text>
       </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, ScrollView } from "react-native"
 import { ListInput } from "../../components/list-input"
 import { Subscribe } from "unstated"
 import { RootStore } from "../../app/root-component"
@@ -36,12 +36,12 @@ export class InputScreen extends React.Component {
     return (
       <Subscribe to={[RootStore]}>
         {store => (
-          <View style={styles.container}>
+          <ScrollView style={styles.container} contentContainerStyle={styles.container}>
             <View style={styles.topContainer}>
               <RecentlyAdded items={store.state.items} onClear={() => store.clearItems()} />
             </View>
             <View style={styles.bottomContainer}>{this.renderInputRow(store)}</View>
-          </View>
+          </ScrollView>
         )}
       </Subscribe>
     )
@@ -51,7 +51,7 @@ export class InputScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5FCFF"
+    backgroundColor: colors.background
   },
   topContainer: {
     flex: 2.5,
