@@ -1,10 +1,16 @@
 import React from "react"
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native"
+import { StyleSheet, Text, View } from "react-native"
 import { ListInput } from "../../components/list-input"
 import { Subscribe } from "unstated"
 import { RootStore } from "../../app/root-component"
+import { RecentlyAdded } from "../../components/recently-added"
+import { CustomNav } from "../../components/custom-nav"
 
 export class InputScreen extends React.Component {
+  static navigationOptions = () => ({
+    header: () => <CustomNav title="INPUT" />
+  })
+
   handleAddPress(store) {
     store.addItem()
   }
@@ -29,14 +35,10 @@ export class InputScreen extends React.Component {
       <Subscribe to={[RootStore]}>
         {store => (
           <View style={styles.container}>
-            {this.renderInputRow(store)}
-            <View style={{ flexDirection: "row" }}>
-              {store.state.items.map((item, i) => (
-                <Text key={i} style={styles.theValue}>
-                  {item.name}
-                </Text>
-              ))}
+            <View style={styles.topContainer}>
+              <RecentlyAdded items={store.state.items} onClear={() => store.clearItems()} />
             </View>
+            <View style={styles.bottomContainer}>{this.renderInputRow(store)}</View>
           </View>
         )}
       </Subscribe>
@@ -47,24 +49,15 @@ export class InputScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: "30%",
-    alignItems: "center",
     backgroundColor: "#F5FCFF"
   },
-  theValue: {
-    margin: 10,
-    fontSize: 18
-  },
-  itemWrapper: {
-    borderBottomWidth: 1,
-    borderColor: "lightgray",
-    height: 40,
-    width: 100,
+  topContainer: {
+    flex: 2.5,
     alignItems: "center",
-    justifyContent: "center"
+    paddingTop: 24
   },
-  item: {
-    margin: 5,
-    fontSize: 12
+  bottomContainer: {
+    flex: 4,
+    alignItems: "center"
   }
 })

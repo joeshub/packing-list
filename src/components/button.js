@@ -1,15 +1,17 @@
 import React from "react"
 import { Text, TouchableOpacity, StyleSheet } from "react-native"
+import { colors } from "../theme/colors"
 
 export class Button extends React.Component {
-  render () {
-    const { onPress, text, clear } = this.props
+  render() {
+    const { onPress, text, active } = this.props
+    const { infiniteRed, rainCloud, dim, pureWhite } = colors
     return (
       <TouchableOpacity
-        style={[styles.root, { backgroundColor: clear ? "gray" : "green" }]}
+        style={[styles.root, { backgroundColor: active ? infiniteRed : rainCloud }]}
         onPress={() => onPress()}
       >
-        <Text style={styles.buttonText}>{text}</Text>
+        <Text style={[styles.buttonText, { color: active ? pureWhite : dim }]}>{text}</Text>
       </TouchableOpacity>
     )
   }
@@ -17,19 +19,12 @@ export class Button extends React.Component {
 
 const styles = StyleSheet.create({
   root: {
-    borderRadius: 5,
-    marginLeft: 10,
-    shadowRadius: 5,
-    shadowOffset: {
-      width: 5,
-      height: 5
-    },
-    shadowOpacity: 0.9,
-    shadowColor: "black",
-    justifyContent: "center"
+    borderRadius: 4,
+    justifyContent: "center",
+    alignItems: "center"
   },
   buttonText: {
-    margin: 5,
-    color: "white"
+    margin: 11,
+    fontWeight: "500"
   }
 })

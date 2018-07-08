@@ -1,38 +1,44 @@
 import React from "react"
 import { View, TextInput, StyleSheet } from "react-native"
 import { Button } from "./button"
+import { colors } from "../theme/colors"
 
 export class ListInput extends React.Component {
   render() {
-    const { value, onChangeText, onAddItem, onClearItems } = this.props
+    const { value, onChangeText, onAddItem } = this.props
     return (
-      <View style={styles.inputRow}>
-        <TextInput
-          autoFocus
-          style={styles.input}
-          value={value}
-          onChangeText={val => onChangeText(val)}
-          onSubmitEditing={() => onAddItem()}
-          returnKeyType="done"
-        />
-        <Button text="ADD" onPress={() => onAddItem()} />
-        <Button text="Clear" clear onPress={() => onClearItems()} />
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            autoFocus
+            style={styles.input}
+            value={value}
+            onChangeText={val => onChangeText(val)}
+            onSubmitEditing={() => onAddItem()}
+            returnKeyType="done"
+            placeholder="Enter Item"
+            placeholderTextColor={colors.rainCloud}
+          />
+        </View>
+        <Button text="Add item to List" onPress={() => onAddItem()} active={value} />
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  input: {
-    width: "50%",
-    height: 40,
-    borderColor: "lightgray",
-    borderWidth: 1,
-    padding: 5,
-    fontSize: 16,
-    backgroundColor: "white"
+  container: {
+    width: "90%"
   },
-  inputRow: {
-    flexDirection: "row"
+  inputContainer: {
+    height: 48,
+    marginBottom: 20
+  },
+  input: {
+    flex: 1,
+    borderColor: colors.clay,
+    borderBottomWidth: 2,
+    fontSize: 16,
+    fontWeight: "300"
   }
 })

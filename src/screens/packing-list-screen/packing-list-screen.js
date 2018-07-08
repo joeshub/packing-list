@@ -3,23 +3,36 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from
 import { ListInput } from "../../components/list-input"
 import { Subscribe } from "unstated"
 import { RootStore } from "../../app/root-component"
+import { colors } from "../../theme/colors"
+import { CustomNav } from "../../components/custom-nav"
 /*
-  STEP NINE
+  STEP TEN
   • Manage state with Unstated (https://github.com/jamiebuilds/unstated)
   • Persist data with AsyncStorage in root-component exercise <==
   • Convert packing-list-screen & input-screen → Tabs Navigator
 */
 
 export class PackingListScreen extends React.Component {
+  static navigationOptions = () => ({
+    header: () => <CustomNav title="PACKING LIST" />
+  })
+
   listItems(item, index, store) {
-    const backgroundColor = item.checked ? "dodgerblue" : "indigo"
+    const { checked, name } = item
+    const { rainCloud, pureWhite, slate, dim } = colors
+    const backgroundColor = item.checked ? rainCloud : pureWhite
     return (
       <TouchableOpacity
         onPress={() => store.checkItem(item, store)}
         style={[styles.itemWrapper, { backgroundColor }]}
         key={index}
       >
-        <Text style={styles.item}>{item.name.toUpperCase()}</Text>
+        <Text
+          textDecorationLine={checked ? "line-through" : "none"}
+          style={[styles.item, { color: checked ? dim : slate }]}
+        >
+          {name}
+        </Text>
       </TouchableOpacity>
     )
   }
@@ -49,29 +62,25 @@ export class PackingListScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5FCFF"
+    backgroundColor: colors.background
   },
   list: {
-    padding: 20,
-    borderWidth: 1,
-    borderColor: "lightgray"
+    padding: 20
   },
   listContainer: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: "lightgray",
-    backgroundColor: "white"
+    backgroundColor: colors.background
   },
   itemWrapper: {
     flex: 1,
-    margin: 2,
+    margin: 4,
+    borderRadius: 4,
+    height: 48,
     justifyContent: "center"
   },
   item: {
-    margin: 5,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold",
-    color: "bisque",
     alignSelf: "center"
   }
 })

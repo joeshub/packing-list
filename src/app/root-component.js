@@ -4,59 +4,44 @@ import { InputScreen } from "../screens/input-screen"
 import { createBottomTabNavigator, createStackNavigator } from "react-navigation"
 import { Provider, Container } from "unstated"
 import { Text, View, AsyncStorage } from "react-native"
+import { colors } from "../theme/colors"
 
 const RootStack = createBottomTabNavigator(
   {
-    Home: createStackNavigator(
-      { PackingListScreen },
-      {
-        navigationOptions: () => ({
-          title: "Packing List"
-        })
-      }
-    ),
-    Input: createStackNavigator(
-      { InputScreen },
-      {
-        navigationOptions: () => ({
-          title: "ADD ITEM"
-        })
-      }
-    )
+    List: createStackNavigator({ PackingListScreen }),
+    Input: createStackNavigator({ InputScreen })
   },
   {
-    initialRouteName: "Home",
     navigationOptions: ({ navigation, focused }) => ({
       tabBarOptions: {
         labelStyle: {
-          fontSize: 16,
-          bottom: 12
-        }
+          fontSize: 10,
+          bottom: 5
+        },
+        activeTintColor: colors.infiniteRed
       },
-      title: "Header title",
-      tabBarLabel: ({ focused, tintColor }) => {
-        return (
+      tabBarIcon: ({ focused, tintColor }) =>
+        focused ? (
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              height: "100%",
-              backgroundColor: focused ? "royalblue" : "transparent"
+              width: 10,
+              marginRight: 3,
+              height: 10,
+              marginRight: 3,
+              backgroundColor: tintColor
             }}
-          >
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: focused ? "800" : "100",
-                color: focused ? "white" : "black"
-              }}
-            >
-              {navigation.state.routeName}
-            </Text>
-          </View>
+          />
+        ) : (
+          <View
+            style={{
+              width: 10,
+              marginRight: 3,
+              height: 10,
+              marginRight: 3,
+              backgroundColor: tintColor
+            }}
+          />
         )
-      }
     })
   }
 )
