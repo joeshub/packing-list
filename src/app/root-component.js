@@ -3,7 +3,7 @@ import { PackingListScreen } from "../screens/packing-list-screen"
 import { InputScreen } from "../screens/input-screen"
 import { createBottomTabNavigator, createStackNavigator } from "react-navigation"
 import { Provider, Container } from "unstated"
-import { Text, View } from "react-native"
+import { Text, View, AsyncStorage } from "react-native"
 
 const RootStack = createBottomTabNavigator(
   {
@@ -67,6 +67,8 @@ export class RootStore extends Container {
     inputValue: null
   }
 
+  setItems = items => this.setState({ items })
+
   handleInput = value => {
     this.setState({
       ...this.state,
@@ -81,6 +83,7 @@ export class RootStore extends Container {
       items: newItems,
       inputValue: null
     })
+    AsyncStorage.setItem("items", JSON.stringify(newItems))
   }
 
   clearItems = () => {
@@ -96,16 +99,26 @@ export class RootStore extends Container {
       const { name, checked } = item
       return name === selectedName ? { name: name, checked: !checked } : item
     })
-
     this.setState({ items: newItems })
+    AsyncStorage.setItem("items", JSON.stringify(newItems))
   }
 }
 
 export default class RootComponent extends Component {
+  constructor() {
+    super()
+    this.rootStore = new RootStore()
+    this.refreshList(this.rootStore)
+  }
+  refreshList = async rootStore => {
+    await AsyncStorage.getItem("items", (error, items) => {
+      items && rootStore.setItems(JSON.parse(items))
+    })
+  }
+
   render() {
-    const rootStore = new RootStore()
     return (
-      <Provider inject={[rootStore]}>
+      <Provider inject={[this.rootStore]}>
         <RootStack />
       </Provider>
     )
