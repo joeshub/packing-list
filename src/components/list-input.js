@@ -10,11 +10,15 @@ export class ListInput extends React.Component {
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <TextInput
+            ref={ref => (this.input = ref)}
             autoFocus
             style={styles.input}
             value={value}
             onChangeText={val => onChangeText(val)}
-            onSubmitEditing={() => onAddItem()}
+            onSubmitEditing={() => {
+              onAddItem()
+              this.input.clear()
+            }}
             returnKeyType="done"
             placeholder="Enter Item"
             placeholderTextColor={colors.rainCloud}

@@ -13,7 +13,7 @@ export class RecentlyAdded extends React.Component {
             Clear All
           </Text>
         </View>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
           {items.map((item, i) => (
             <View style={styles.itemWrapper} key={i}>
               <Text style={styles.item}>{item.name.toLowerCase()}</Text>
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   },
   itemWrapper: {
     marginRight: 5,
+    marginTop: 5,
     backgroundColor: colors.ghost,
     borderRadius: 4,
     justifyContent: "center",
