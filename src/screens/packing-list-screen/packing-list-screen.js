@@ -28,8 +28,10 @@ export class PackingListScreen extends React.Component {
         key={index}
       >
         <Text
-          textDecorationLine={checked ? "line-through" : "none"}
-          style={[styles.item, { color: checked ? dim : slate }]}
+          style={[
+            styles.item,
+            { color: checked ? dim : slate, textDecorationLine: checked ? "line-through" : "none" }
+          ]}
         >
           {name}
         </Text>
