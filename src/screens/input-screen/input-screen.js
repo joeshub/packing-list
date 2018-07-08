@@ -5,6 +5,8 @@ import { Subscribe } from "unstated"
 import { RootStore } from "../../app/root-component"
 import { RecentlyAdded } from "../../components/recently-added"
 import { CustomNav } from "../../components/custom-nav"
+import { colors } from "../../theme/colors"
+import Icon from "react-native-vector-icons/Ionicons"
 
 export class InputScreen extends React.Component {
   static navigationOptions = () => ({

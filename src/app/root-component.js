@@ -5,6 +5,7 @@ import { createBottomTabNavigator, createStackNavigator } from "react-navigation
 import { Provider, Container } from "unstated"
 import { Text, View, AsyncStorage } from "react-native"
 import { colors } from "../theme/colors"
+import Icon from "react-native-vector-icons/Ionicons"
 
 const RootStack = createBottomTabNavigator(
   {
@@ -20,28 +21,32 @@ const RootStack = createBottomTabNavigator(
         },
         activeTintColor: colors.infiniteRed
       },
-      tabBarIcon: ({ focused, tintColor }) =>
-        focused ? (
-          <View
-            style={{
-              width: 10,
-              marginRight: 3,
-              height: 10,
-              marginRight: 3,
-              backgroundColor: tintColor
-            }}
-          />
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { key } = navigation.state
+        return key === "List" ? (
+          <Icon name="ios-apps-outline" color={tintColor} size={24} />
         ) : (
-          <View
-            style={{
-              width: 10,
-              marginRight: 3,
-              height: 10,
-              marginRight: 3,
-              backgroundColor: tintColor
-            }}
-          />
+          <View>
+            <Icon
+              name="ios-browsers-outline"
+              size={28}
+              color={tintColor}
+              style={{
+                position: "absolute",
+                left: -12,
+                bottom: -16,
+                transform: [{ rotateY: "180deg" }]
+              }}
+            />
+            <Icon
+              color={tintColor}
+              name="md-add"
+              size={16}
+              style={{ position: "absolute", top: -7, left: -3.5 }}
+            />
+          </View>
         )
+      }
     })
   }
 )
