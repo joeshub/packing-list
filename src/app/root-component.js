@@ -91,6 +91,7 @@ export class RootStore extends Container {
       items: [],
       inputValue: null
     })
+    AsyncStorage.setItem("items", JSON.stringify([]))
   }
 
   checkItem = selectedItem => {
