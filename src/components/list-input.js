@@ -16,8 +16,8 @@ export class ListInput extends React.Component {
             value={value}
             onChangeText={val => onChangeText(val)}
             onSubmitEditing={() => {
-              onAddItem()
               this.input.clear()
+              onAddItem()
             }}
             returnKeyType="done"
             placeholder="Enter Item"
