@@ -78,12 +78,16 @@ export class RootStore extends Container {
 
   addItem = () => {
     const { items, inputValue } = this.state
-    const newItems = [...items, { name: inputValue, checked: false }]
-    this.setState({
-      items: newItems,
-      inputValue: null
-    })
-    AsyncStorage.setItem("items", JSON.stringify(newItems))
+    if (inputValue) {
+      const newItems = [...items, { name: inputValue, checked: false }]
+      this.setState({
+        items: newItems,
+        inputValue: null
+      })
+      AsyncStorage.setItem("items", JSON.stringify(newItems))
+    } else {
+      alert("You must enter an item!")
+    }
   }
 
   clearItems = () => {
