@@ -1,11 +1,11 @@
 import React from "react"
 import { StyleSheet, Text, View, ScrollView } from "react-native"
-import { ListInput } from "../../components/list-input"
+import { ListInput } from "../components/list-input"
 import { Subscribe } from "unstated"
-import { RootStore } from "../../app/root-component"
-import { RecentlyAdded } from "../../components/recently-added"
-import { CustomNav } from "../../components/custom-nav"
-import { colors } from "../../theme/colors"
+import { RootStore } from "../app/root-component"
+import { RecentlyAdded } from "../components/recently-added"
+import { CustomNav } from "../components/custom-nav"
+import { colors } from "../theme/colors"
 import Icon from "react-native-vector-icons/Ionicons"
 
 export class InputScreen extends React.Component {
@@ -36,7 +36,11 @@ export class InputScreen extends React.Component {
     return (
       <Subscribe to={[RootStore]}>
         {store => (
-          <ScrollView style={styles.container} contentContainerStyle={styles.container}>
+          <ScrollView
+            keyboardShouldPersistTaps="always"
+            style={styles.container}
+            contentContainerStyle={styles.container}
+          >
             <View style={styles.topContainer}>
               <RecentlyAdded items={store.state.items} onClear={() => store.clearItems()} />
             </View>

@@ -1,10 +1,10 @@
 import React from "react"
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from "react-native"
-import { ListInput } from "../../components/list-input"
+import { ListInput } from "../components/list-input"
 import { Subscribe } from "unstated"
-import { RootStore } from "../../app/root-component"
-import { colors } from "../../theme/colors"
-import { CustomNav } from "../../components/custom-nav"
+import { RootStore } from "../app/root-component"
+import { colors } from "../theme/colors"
+import { CustomNav } from "../components/custom-nav"
 /*
   STEP TEN
   • Manage state with Unstated (https://github.com/jamiebuilds/unstated)
@@ -48,7 +48,7 @@ export class PackingListScreen extends React.Component {
           <View style={styles.container}>
             <FlatList
               data={store.state.items}
-              keyExtractor={item => item}
+              keyExtractor={item => item.name}
               renderItem={({ item, index }) => this.listItems(item, index, store)}
               contentContainerStyle={styles.listContainer}
               style={styles.list}
