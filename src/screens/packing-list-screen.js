@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native"
-import { ListInput } from "../../components/list-input"
+import { ListInput } from "../components/list-input"
 
 /*
   STEP SEVEN - d
