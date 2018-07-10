@@ -1,8 +1,8 @@
 import React from "react"
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native"
-import { ListInput } from "../../components/list-input"
+import { ListInput } from "../components/list-input"
 import { Subscribe } from "unstated"
-import { RootStore } from "../../app/root-component"
+import { RootStore } from "../app/root-component"
 
 export class InputScreen extends React.Component {
   handleAddPress(store) {
