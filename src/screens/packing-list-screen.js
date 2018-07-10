@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from "react-native"
-import { ListInput } from "../../components/list-input"
+import { ListInput } from "../components/list-input"
 
 /*
   STEP EIGHT
@@ -112,7 +112,7 @@ export class PackingListScreen extends React.Component {
       <View style={styles.container}>
         <FlatList
           data={items}
-          keyExtractor={item => item}
+          keyExtractor={item => item.name}
           renderItem={({ item, index }) => this.listItems(item, index)}
           contentContainerStyle={styles.listContainer}
           style={styles.list}
