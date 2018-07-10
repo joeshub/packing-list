@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "r
   STEP FOUR
   • Add ability to "check" an item
   • Intro to FlatList
-  • Bring in styled list
+  • Move styled list component to separate function
   • Update local state
 */
 
