@@ -1,6 +1,5 @@
 import React from "react"
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from "react-native"
-import { ListInput } from "../components/list-input"
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native"
 import { Subscribe } from "unstated"
 import { RootStore } from "../app/root-component"
 import { colors } from "../theme/colors"
@@ -40,15 +39,13 @@ export class PackingListScreen extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props
-    const items = navigation.getParam("items", [])
     return (
       <Subscribe to={[RootStore]}>
         {store => (
           <View style={styles.container}>
             <FlatList
               data={store.state.items}
-              keyExtractor={item => item.name}
+              keyExtractor={(item, index) => item.name + index}
               renderItem={({ item, index }) => this.listItems(item, index, store)}
               contentContainerStyle={styles.listContainer}
               style={styles.list}
