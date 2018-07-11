@@ -8,6 +8,17 @@ import { RootStore } from "../app/root-component"
 */
 
 export class PackingListScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: "Packing List",
+      headerRight: (
+        <Text style={{ marginRight: 10 }} onPress={() => navigation.navigate("Input")}>
+          Input
+        </Text>
+      )
+    }
+  }
+
   listItems(item, index, store) {
     const backgroundColor = item.checked ? "dodgerblue" : "indigo"
     return (
@@ -22,8 +33,6 @@ export class PackingListScreen extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props
-    const items = navigation.getParam("items", [])
     return (
       <Subscribe to={[RootStore]}>
         {store => (
