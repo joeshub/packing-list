@@ -1,6 +1,6 @@
 import React from "react"
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native"
-import { ListInput } from "../../components/list-input"
+import { ListInput } from "../components/list-input"
 
 /*
   STEP SEVEN - c
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
   item: {
     margin: 5,
     fontSize: 18,
+    color: "white",
     fontWeight: "bold",
     color: "bisque",
     alignSelf: "center"
