@@ -39,7 +39,7 @@ export class PackingListScreen extends React.Component {
           <View style={styles.container}>
             <FlatList
               data={store.state.items}
-              keyExtractor={(item, index) => item.name + index}
+              keyExtractor={item => item.name}
               renderItem={({ item, index }) => this.listItems(item, index, store)}
               contentContainerStyle={styles.listContainer}
               style={styles.list}
