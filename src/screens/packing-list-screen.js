@@ -1,13 +1,12 @@
 import React from "react"
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from "react-native"
-import { ListInput } from "../components/list-input"
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native"
 import { Subscribe } from "unstated"
 import { RootStore } from "../app/root-component"
 /*
   STEP NINE
-  • Manage state with Unstated (https://github.com/jamiebuilds/unstated)
-  • Persist data with AsyncStorage in root-component exercise <==
-  • Convert packing-list-screen & input-screen → Tabs Navigator
+  • Bring in AsyncStorage
+  • Persisted state (close & re-open app with same data)
+  • Convert packing-list-screen & input-screen → Tabs Navigator
 */
 
 export class PackingListScreen extends React.Component {
@@ -25,15 +24,13 @@ export class PackingListScreen extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props
-    const items = navigation.getParam("items", [])
     return (
       <Subscribe to={[RootStore]}>
         {store => (
           <View style={styles.container}>
             <FlatList
               data={store.state.items}
-              keyExtractor={(item, index) => item.name + index}
+              keyExtractor={item => item.name}
               renderItem={({ item, index }) => this.listItems(item, index, store)}
               contentContainerStyle={styles.listContainer}
               style={styles.list}
