@@ -12,8 +12,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList } from "r
 export class PackingListScreen extends React.Component {
   state = {
     inputValue: null,
-    items: [],
-    checkedItems: []
+    items: []
   }
 
   clearInput() {
@@ -28,7 +27,7 @@ export class PackingListScreen extends React.Component {
   addNewItem() {
     const { inputValue, items } = this.state
     if (inputValue) {
-      const newItems = [...items, inputValue]
+      const newItems = [...items, { name: inputValue, checked: false }]
       this.setState({ items: newItems })
       this.clearInput()
     }
@@ -38,15 +37,13 @@ export class PackingListScreen extends React.Component {
     this.setState({ items: [] })
     this.clearInput()
   }
-  checkItem(selected) {
-    const { checkedItems } = this.state
-    let newCheckedItems
-    if (checkedItems.includes(selected)) {
-      newCheckedItems = checkedItems.filter(item => item !== selected)
-    } else {
-      newCheckedItems = [...checkedItems, selected]
-    }
-    this.setState({ checkedItems: newCheckedItems })
+  checkItem = selectedItem => {
+    const selectedName = selectedItem.name
+    const newItems = this.state.items.map(item => {
+      const { name, checked } = item
+      return name === selectedName ? { name: name, checked: !checked } : item
+    })
+    this.setState({ items: newItems })
   }
 
   renderInputRow = () => {
@@ -69,22 +66,21 @@ export class PackingListScreen extends React.Component {
     )
   }
 
-  listItems = (item, index) => {
-    const { checkedItems } = this.state
-    const backgroundColor = checkedItems.includes(item) ? "dodgerblue" : "indigo"
+  listItems(item, index) {
+    const backgroundColor = item.checked ? "dodgerblue" : "indigo"
     return (
       <TouchableOpacity
         onPress={() => this.checkItem(item)}
         style={[styles.itemWrapper, { backgroundColor }]}
         key={index}
       >
-        <Text style={styles.item}>{item.toUpperCase()}</Text>
+        <Text style={styles.item}>{item.name.toUpperCase()}</Text>
       </TouchableOpacity>
     )
   }
 
   render() {
-    const { items, checkedItems } = this.state
+    const { items } = this.state
     return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
@@ -92,7 +88,7 @@ export class PackingListScreen extends React.Component {
           <View style={{ flexDirection: "row" }}>
             {items.map((item, i) => (
               <Text onPress={() => this.checkItem(item)} key={i} style={styles.theValue}>
-                {item}
+                {item.name}
               </Text>
             ))}
           </View>
@@ -101,7 +97,7 @@ export class PackingListScreen extends React.Component {
           <View style={{ alignItems: "center", flexShrink: 1 }}>
             <FlatList
               data={items}
-              extraData={{ data: checkedItems.length }}
+              extraData={{ data: items.length }}
               keyExtractor={item => item}
               renderItem={({ item, index }) => this.listItems(item, index)}
               contentContainerStyle={styles.listContainer}
