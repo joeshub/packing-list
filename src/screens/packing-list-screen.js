@@ -1,102 +1,18 @@
 import React from "react"
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, AsyncStorage } from "react-native"
-import { ListInput } from "../components/list-input"
-
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from "react-native"
+import { Subscribe } from "unstated"
+import { RootStore } from "../app/root-component"
 /*
   STEP EIGHT
-  • Bring in AsyncStorage
-  • Store updated items in AsyncStorage
-  • Persisted state (close & re-open app with same data)
+  • Manage state with Unstated (https://github.com/jamiebuilds/unstated)
 */
 
 export class PackingListScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerTitle: "Packing List",
-      headerRight: (
-        <Text
-          style={{ marginRight: 10 }}
-          onPress={() =>
-            navigation.navigate("Input", {
-              items: navigation.getParam("items", []),
-              onAdd: navigation.getParam("onAdd", null),
-              onClear: navigation.getParam("onClear", null),
-              inputValue: navigation.getParam("inputValue", null),
-              setInputValue: navigation.getParam("setInputValue", null)
-            })
-          }
-        >
-          Input
-        </Text>
-      )
-    }
-  }
-
-  refreshData = async () => {
-    const items = await AsyncStorage.getItem("items")
-    if (!items) {
-      AsyncStorage.setItem("items", JSON.stringify([]))
-      this.setNavState({ items: [] })
-    } else {
-      const refreshedItems = JSON.parse(items)
-      this.setNavState({ items: refreshedItems })
-    }
-  }
-
-  componentDidMount() {
-    this.setNavState({
-      inputValue: null,
-      onAdd: () => this.handleAddPress(),
-      onClear: () => this.handleClearPress(),
-      setInputValue: val => this.handleInputValue(val)
-    })
-    this.refreshData()
-  }
-
-  setNavState(newState) {
-    const currentState = this.props.navigation.state.params
-    this.props.navigation.setParams({ ...newState })
-  }
-
-  handleInputValue(value) {
-    this.setNavState({ inputValue: value })
-  }
-
-  handleAddPress() {
-    const { navigation } = this.props
-    const items = navigation.getParam("items", [])
-    const inputValue = navigation.getParam("inputValue", null)
-    if (inputValue) {
-      const newItems = [...items, { name: inputValue, checked: false }]
-      AsyncStorage.setItem("items", JSON.stringify(newItems))
-      this.setNavState({ items: newItems, inputValue: null })
-      navigation.goBack(null)
-    }
-  }
-
-  handleClearPress() {
-    this.setNavState({ items: [], inputValue: null })
-    AsyncStorage.setItem("items", JSON.stringify([]))
-  }
-
-  checkItem(selectedItem) {
-    const { navigation } = this.props
-    const selectedName = selectedItem.name
-    const items = navigation.getParam("items", [])
-    const newItems = items.map(item => {
-      const { name, checked } = item
-      return name === selectedName ? { name: name, checked: !checked } : item
-    })
-
-    AsyncStorage.setItem("items", JSON.stringify(newItems))
-    this.setNavState({ items: newItems })
-  }
-
-  listItems = (item, index) => {
+  listItems(item, index, store) {
     const backgroundColor = item.checked ? "dodgerblue" : "indigo"
     return (
       <TouchableOpacity
-        onPress={() => this.checkItem(item)}
+        onPress={() => store.checkItem(item, store)}
         style={[styles.itemWrapper, { backgroundColor }]}
         key={index}
       >
@@ -109,16 +25,20 @@ export class PackingListScreen extends React.Component {
     const { navigation } = this.props
     const items = navigation.getParam("items", [])
     return (
-      <View style={styles.container}>
-        <FlatList
-          data={items}
-          keyExtractor={item => item.name}
-          renderItem={({ item, index }) => this.listItems(item, index)}
-          contentContainerStyle={styles.listContainer}
-          style={styles.list}
-          numColumns={3}
-        />
-      </View>
+      <Subscribe to={[RootStore]}>
+        {store => (
+          <View style={styles.container}>
+            <FlatList
+              data={store.state.items}
+              keyExtractor={(item, index) => item.name + index}
+              renderItem={({ item, index }) => this.listItems(item, index, store)}
+              contentContainerStyle={styles.listContainer}
+              style={styles.list}
+              numColumns={3}
+            />
+          </View>
+        )}
+      </Subscribe>
     )
   }
 }
