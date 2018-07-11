@@ -12,8 +12,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-nativ
 export default class App extends Component {
   state = {
     inputValue: null,
-    items: [],
-    checkedItems: []
+    items: []
   }
 
   handleInput = value => {
@@ -22,24 +21,24 @@ export default class App extends Component {
 
   addNewItem() {
     const { inputValue, items } = this.state
-    const newItems = [...items, inputValue]
-    this.setState({ items: newItems })
-    this.input.clear()
+    if (inputValue) {
+      const newItems = [...items, { name: inputValue, checked: false }]
+      this.setState({ items: newItems })
+      this.input.clear()
+    }
   }
 
   clearItems() {
     this.setState({ items: [] })
     this.input.clear()
   }
-  checkItem(selected) {
-    const { checkedItems } = this.state
-    let newCheckedItems
-    if (checkedItems.includes(selected)) {
-      newCheckedItems = checkedItems.filter(item => item !== selected)
-    } else {
-      newCheckedItems = [...checkedItems, selected]
-    }
-    this.setState({ checkedItems: newCheckedItems })
+  checkItem = selectedItem => {
+    const selectedName = selectedItem.name
+    const newItems = this.state.items.map(item => {
+      const { name, checked } = item
+      return name === selectedName ? { name: name, checked: !checked } : item
+    })
+    this.setState({ items: newItems })
   }
 
   renderInputRow = () => {
@@ -63,20 +62,20 @@ export default class App extends Component {
   }
 
   render() {
-    const { items, checkedItems } = this.state
+    const { items } = this.state
     return (
       <View style={styles.container}>
         {this.renderInputRow()}
         <View style={{ marginTop: 20 }}>
           {items.map((item, index) => {
-            const backgroundColor = checkedItems.includes(item) ? "dodgerblue" : "indigo"
+            const backgroundColor = item.checked ? "dodgerblue" : "indigo"
             return (
               <TouchableOpacity
                 onPress={() => this.checkItem(item)}
                 style={[styles.itemWrapper, { backgroundColor }]}
                 key={index}
               >
-                <Text style={styles.item}>{item.toUpperCase()}</Text>
+                <Text style={styles.item}>{item.name.toUpperCase()}</Text>
               </TouchableOpacity>
             )
           })}
